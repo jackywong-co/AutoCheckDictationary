@@ -10,24 +10,21 @@ from selenium import webdriver
 def driver(imput):
     chromedriver = './webdriver/chromedriver'
     driver = webdriver.Chrome(chromedriver)
-    driver.get('https://dictionary.cambridge.org/')
-    driver.minimize_window()
+    path = 'https://dictionary.cambridge.org/'
+    driver.get(path)
+    # driver.minimize_window()
     searchword = driver.find_element_by_xpath('//*[@id="searchword"]')
     searchword.send_keys(imput)
-    # driver.implicitly_wait(5)
     time.sleep(1)
+    # get click the button
     button = driver.find_element_by_css_selector('button.cdo-search-button')
     button.click()
-    # word = driver.find_element_by_link_text(imput).text
-    # word = driver.find_element_by_css_selector('span.').text
-    word = driver.find_element_by_xpath("//meta[@name='og:title']").text
-    time.sleep(5)
+    # get the word from meta tag
+    word = driver.find_element_by_xpath("//meta[@property='og:title']").get_attribute("content")
+    time.sleep(3)
     driver.close()
     print(word)
-    # print(imput)
     print('finished')
-    # return word
-
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
